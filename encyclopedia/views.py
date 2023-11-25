@@ -15,7 +15,7 @@ def entry_page(request, title):
         entry_send = markdown2.markdown(entry)
         print(entry_send)
         return render(request, "encyclopedia/entry_page.html", {
-            
+            "title": title.capitalize(),
             "entry": entry_send
         })
     else:
@@ -23,7 +23,7 @@ def entry_page(request, title):
         if entry != None:
             entry_send = markdown2.markdown(entry)
             return render(request, "encyclopedia/entry_page.html", {
-                
+                "title": title.upper(),
                 "entry": entry_send
             })
         else:
