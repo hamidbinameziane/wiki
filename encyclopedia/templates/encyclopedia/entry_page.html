@@ -1,11 +1,9 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    {{title}}
+    {{ title }}
 {% endblock %}
 
 {% block body %}
-{% autoescape off %}
-        {{entry}}
-{% endautoescape %}
+        {{ entry|safe }}
 {% endblock %}
