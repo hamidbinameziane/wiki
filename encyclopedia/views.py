@@ -86,5 +86,7 @@ def entry_page(request, title):
                 "form": SearchForm()
             })
         
-
-
+def create_page(request):
+    return render(request, "encyclopedia/create_page.html", {
+                "form": SearchForm()
+            })

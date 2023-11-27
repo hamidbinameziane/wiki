@@ -1,0 +1,17 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <h1>Create New Page</h1>
+    <form>
+        <div><input type="text" name="title" placeholder="Title"></div>
+        <textarea id="md_text" name="md_text" rows="4" cols="50" placeholder="Type Your Text Here:"></textarea>
+        <div><input type="submit"></div>
+    </form>
+
+    
+
+{% endblock %}
