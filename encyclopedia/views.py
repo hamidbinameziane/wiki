@@ -31,9 +31,6 @@ def index(request):
                 "form": SearchForm()
             })
 
-
-
-
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries(),
         "form": SearchForm()
@@ -87,6 +84,48 @@ def entry_page(request, title):
             })
         
 def create_page(request):
+    if request.method == "POST":
+        if request.POST.get("md_text") and request.POST.get("title"):
+            entry = request.POST.get("title")
+            md_text = request.POST.get("md_text")
+            entries = [x.lower() for x in util.list_entries()]
+            if entry.lower() in entries:
+                return render(request, "encyclopedia/create_page.html", {
+                "form": SearchForm(),
+                "title": entry,
+                "md_text": md_text,
+                "message": "Title already exists!"
+                })
+            else:
+                util.save_entry(entry, md_text)
+                entry_t = util.get_entry(entry)
+                entry_send = markdown2.markdown(entry_t)
+                return render(request, "encyclopedia/entry_page.html", {
+                    "title": entry,
+                    "entry": entry_send,
+                    "form": SearchForm()
+                })
+
+            
+
     return render(request, "encyclopedia/create_page.html", {
                 "form": SearchForm()
+            })
+
+def edit_page(request, title):
+    if request.method == "POST":
+        md_text = request.POST.get("md_text")
+        util.save_entry(title, md_text)
+        entry_t = util.get_entry(title)
+        entry_send = markdown2.markdown(entry_t)
+        return render(request, "encyclopedia/entry_page.html", {
+            "title": title,
+            "entry": entry_send,
+            "form": SearchForm()
+        })
+    entry = util.get_entry(title)
+    return render(request, "encyclopedia/edit_page.html", {
+                "form": SearchForm(),
+                "md_text": entry,
+                "title": title
             })

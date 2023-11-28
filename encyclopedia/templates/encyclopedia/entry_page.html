@@ -6,4 +6,5 @@
 
 {% block body %}
         {{ entry|safe }}
+        <div><a href="{% url 'index' %}wiki/edit_page/{{ title }}">Edit Page</a></div>
 {% endblock %}

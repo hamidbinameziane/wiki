@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Create New Page</h1>
+    <h1>Edit Page</h1>
     <form  method="post">
         {% csrf_token %}
-        <div><input required="required" type="text" name="title" placeholder="Title" style="margin: 10px 0px;" value="{{ title }}"><span style="color: red;">{{ message }}</span></div>
+        <h3>{{ title }}</h3>
         <textarea required="required" name="md_text" rows="4" cols="50" placeholder="Type Your Text Here:">{{ md_text }}</textarea>
         <div><input type="submit" value="Save"></div>
     </form>
