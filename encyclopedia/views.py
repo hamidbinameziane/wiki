@@ -3,6 +3,7 @@ import markdown2
 from django import forms
 
 from . import util
+import random
 
 class SearchForm(forms.Form):
     search = forms.CharField(label="", widget=forms.TextInput({ "placeholder": "Search Encyclopedia",'class': 'search'}))
@@ -22,13 +23,11 @@ def index(request):
                     return render(request, "encyclopedia/entry_page.html", {
                         "title": entry,
                         "entry": entry_send,
-                        "form": SearchForm()
                     })
                 elif query in entry.lower():
                     lst.append(entry)
             return render(request, "encyclopedia/search_page.html", {
                 "lst": lst,
-                "form": SearchForm()
             })
 
     return render(request, "encyclopedia/index.html", {
@@ -50,13 +49,11 @@ def entry_page(request, title):
                     return render(request, "encyclopedia/entry_page.html", {
                         "title": entry,
                         "entry": entry_send,
-                        "form": SearchForm()
                     })
                 elif query in entry.lower():
                     lst.append(entry)
             return render(request, "encyclopedia/search_page.html", {
                 "lst": lst,
-                "form": SearchForm()
             })
 
     entry = util.get_entry(title.capitalize())
@@ -65,7 +62,6 @@ def entry_page(request, title):
         return render(request, "encyclopedia/entry_page.html", {
             "title": title.capitalize(),
             "entry": entry_send,
-            "form": SearchForm()
         })
     else:
         entry = util.get_entry(title.upper())
@@ -74,13 +70,11 @@ def entry_page(request, title):
             return render(request, "encyclopedia/entry_page.html", {
                 "title": title.upper(),
                 "entry": entry_send,
-                "form": SearchForm()
             })
         else:
             return render(request, "encyclopedia/entry_page.html", {
                 
-                "entry": ' the requested page was not found',
-                "form": SearchForm()
+                "entry": ' the requested page was not found'
             })
         
 def create_page(request):
@@ -91,7 +85,6 @@ def create_page(request):
             entries = [x.lower() for x in util.list_entries()]
             if entry.lower() in entries:
                 return render(request, "encyclopedia/create_page.html", {
-                "form": SearchForm(),
                 "title": entry,
                 "md_text": md_text,
                 "message": "Title already exists!"
@@ -103,16 +96,14 @@ def create_page(request):
                 return render(request, "encyclopedia/entry_page.html", {
                     "title": entry,
                     "entry": entry_send,
-                    "form": SearchForm()
                 })
 
             
 
-    return render(request, "encyclopedia/create_page.html", {
-                "form": SearchForm()
-            })
+    return render(request, "encyclopedia/create_page.html")
 
 def edit_page(request, title):
+    
     if request.method == "POST":
         md_text = request.POST.get("md_text")
         util.save_entry(title, md_text)
@@ -121,11 +112,14 @@ def edit_page(request, title):
         return render(request, "encyclopedia/entry_page.html", {
             "title": title,
             "entry": entry_send,
-            "form": SearchForm()
         })
     entry = util.get_entry(title)
     return render(request, "encyclopedia/edit_page.html", {
-                "form": SearchForm(),
                 "md_text": entry,
                 "title": title
             })
+
+def random_page(request):
+    entries = util.list_entries()
+    entry = random.choice(entries)
+    
