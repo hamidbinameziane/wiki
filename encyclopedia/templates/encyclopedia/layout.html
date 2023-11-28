@@ -23,8 +23,8 @@
                     <a href="{% url 'create_page' %}">Create New Page</a>
                 </div>
                 <div>
-                    Random Page
-                </div>
+                    <a href="{% url 'index' %}wiki/{{ random_entry }}">Random Page</a>
+                    </div>
                 {% block nav %}
                 {% endblock %}
             </div>
