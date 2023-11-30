@@ -81,7 +81,7 @@ def entry_page(request, title):
         else:
             return render(request, "encyclopedia/entry_page.html", {
                 
-                "entry": ' the requested page was not found',
+                "message": ' the requested page was not found!',
                 "random_entry":random_page(),
             })
         

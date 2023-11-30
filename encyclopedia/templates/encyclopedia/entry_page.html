@@ -6,5 +6,8 @@
 
 {% block body %}
         {{ entry|safe }}
+        <p style="color: red;">{{ message }}</p>
+        {% if not message %}
         <div><a href="{% url 'index' %}wiki/edit_page/{{ title }}">Edit Page</a></div>
+        {% endif %}
 {% endblock %}
